@@ -9,10 +9,47 @@
         android:id="@+id/homeFragment"
         android:name="com.umitytsr.myapplication.ui.news.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_detailerFragment"
+            app:destination="@id/detailerFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_allNewsFragment"
+            app:destination="@id/allNewsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/favoriteFragment"
         android:name="com.umitytsr.myapplication.ui.news.favorite.FavoriteFragment"
         android:label="fragment_favorite"
         tools:layout="@layout/fragment_favorite" />
+    <fragment
+        android:id="@+id/detailerFragment"
+        android:name="com.umitytsr.myapplication.ui.news.detailer.DetailerFragment"
+        android:label="fragment_detailer"
+        tools:layout="@layout/fragment_detailer" >
+        <argument
+            android:name="article"
+            app:argType="com.umitytsr.myapplication.data.model.Article" />
+        <action
+            android:id="@+id/action_detailerFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/detailerFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/allNewsFragment"
+        android:name="com.umitytsr.myapplication.ui.news.allNews.AllNewsFragment"
+        android:label="fragment_all_news"
+        tools:layout="@layout/fragment_all_news" >
+        <action
+            android:id="@+id/action_allNewsFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/allNewsFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.umitytsr.myapplication.ui.news.search.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" />
 </navigation>

@@ -6,7 +6,7 @@ import androidx.room.TypeConverters
 import com.umitytsr.myapplication.data.model.Article
 import com.umitytsr.myapplication.util.DatabaseConverter
 
-@Database(entities = [Article::class], version = 1)
+@Database(entities = [Article::class], version = 1, exportSchema = false)
 @TypeConverters(DatabaseConverter::class)
 abstract class NewsDb: RoomDatabase() {
     abstract fun newsPropertyDao() : NewsDao

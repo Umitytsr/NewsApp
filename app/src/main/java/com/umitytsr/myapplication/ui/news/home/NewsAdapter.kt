@@ -5,23 +5,31 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.umitytsr.myapplication.data.model.Article
-import com.umitytsr.myapplication.databinding.ItemRowNewsBinding
+import com.umitytsr.myapplication.databinding.ItemRowNewsTitleBinding
 
-class NewsAdapter (private val newsList: List<Article>):RecyclerView.Adapter<NewsAdapter.NewsViewHolder>(){
+class NewsAdapter(
+    private val newsList: List<Article>,
+    private val onItemClickNews: NewsItemClickListener
+) : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
 
-    inner class NewsViewHolder(private val binding: ItemRowNewsBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(news: Article){
-            with(binding){
+    inner class NewsViewHolder(private val binding: ItemRowNewsTitleBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(news: Article) {
+            with(binding) {
                 Glide.with(itemView.context)
                     .load(news.urlToImage)
                     .into(newsImageView)
+                newsTitleTextView.text = news.title
+                newsCardView.setOnClickListener {
+                    onItemClickNews.newsItemClicked(news)
+                }
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val binding = ItemRowNewsBinding.inflate(layoutInflater,parent,false)
+        val binding = ItemRowNewsTitleBinding.inflate(layoutInflater, parent, false)
         return NewsViewHolder(binding)
     }
 
@@ -29,5 +37,9 @@ class NewsAdapter (private val newsList: List<Article>):RecyclerView.Adapter<New
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
         holder.bind(newsList[position])
+    }
+
+    interface NewsItemClickListener{
+        fun newsItemClicked(news: Article)
     }
 }
