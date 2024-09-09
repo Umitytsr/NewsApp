@@ -18,6 +18,6 @@ interface NewsDao {
     @Delete
     suspend fun deleteNewsFavorite(newsFavorite: Article)
 
-    @Query("SELECT EXISTS(SELECT * FROM favorite WHERE id= :id)")
-    suspend fun isFavorite(id:Int): Boolean
+    @Query("SELECT EXISTS(SELECT * FROM favorite WHERE urlToImage= :urlToImage)")
+    suspend fun isFavorite(urlToImage:String): Boolean
 }

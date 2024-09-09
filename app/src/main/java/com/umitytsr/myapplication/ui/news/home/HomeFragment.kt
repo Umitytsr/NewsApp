@@ -22,7 +22,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(), NewsAdapter.NewsItemClickListener, NewsDescriptionAdapter.NewsCategoryItemClickListener {
+class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private val viewModel: HomeViewModel by viewModels()
     override fun onCreateView(
@@ -75,7 +75,7 @@ class HomeFragment : Fragment(), NewsAdapter.NewsItemClickListener, NewsDescript
                                     // Loading Indicator
                                 }
                                 is Resource.Success -> {
-                                    initLatestNewsRecylerView(resource.data)
+                                    initGeneralNewsRecyclerView(resource.data)
                                 }
                                 is Resource.Error -> {
                                     Toast.makeText(requireContext(),"Check your internet",Toast.LENGTH_SHORT).show()
@@ -91,7 +91,7 @@ class HomeFragment : Fragment(), NewsAdapter.NewsItemClickListener, NewsDescript
                                     // Loading Indicator
                                 }
                                 is Resource.Success -> {
-                                    initCategoryNewsRecylerView(resource.data)
+                                    initDescriptionRecyclerView(resource.data)
                                 }
                                 is Resource.Error -> {
                                     Toast.makeText(requireContext(),"Check your internet",Toast.LENGTH_SHORT).show()
@@ -104,35 +104,30 @@ class HomeFragment : Fragment(), NewsAdapter.NewsItemClickListener, NewsDescript
         }
     }
 
-    private fun initLatestNewsRecylerView(newsList: List<Article>){
-        val _adapter = NewsAdapter(newsList,this@HomeFragment)
-        val _layoutManager = LinearLayoutManager(requireContext(),RecyclerView.HORIZONTAL,false)
-        with(binding.latestNewsRecyclerView){
-            adapter = _adapter
-            layoutManager = _layoutManager
-            setHasFixedSize(true)
+    private fun initGeneralNewsRecyclerView(news: List<Article>){
+        binding.generalNewsRecyclerView.adapter = getGeneralNewsAdapter(news)
+    }
+
+
+
+    private fun getGeneralNewsAdapter(news: List<Article>): NewsAdapter{
+        return NewsAdapter(news){ position ->
+            val newsUI = news[position]
+            val action = HomeFragmentDirections.actionHomeFragmentToDetailerFragment(newsUI)
+            findNavController().navigate(action)
         }
     }
 
-    private fun initCategoryNewsRecylerView(newsList: List<Article>){
-        val _adapter = NewsDescriptionAdapter(newsList,this@HomeFragment)
-        val _layoutManager = LinearLayoutManager(requireContext(),RecyclerView.VERTICAL,false)
-        with(binding.categoryRecyclerView){
-            adapter = _adapter
-            layoutManager = _layoutManager
-            setHasFixedSize(true)
+    private fun initDescriptionRecyclerView(news: List<Article>){
+        binding.categoryRecyclerView.adapter = getDescriptionNewsAdapter(news)
+    }
+
+    private fun getDescriptionNewsAdapter(news: List<Article>): NewsDescriptionAdapter{
+        return NewsDescriptionAdapter(news){ position ->
+            val newsUI = news[position]
+            val action = HomeFragmentDirections.actionHomeFragmentToDetailerFragment(newsUI)
+            findNavController().navigate(action)
         }
     }
 
-    override fun newsItemClicked(news: Article) {
-        findNavController().navigate(
-            HomeFragmentDirections.actionHomeFragmentToDetailerFragment(news)
-        )
-    }
-
-    override fun newsCategoryItemClicked(news: Article) {
-        findNavController().navigate(
-            HomeFragmentDirections.actionHomeFragmentToDetailerFragment(news)
-        )
-    }
 }

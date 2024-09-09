@@ -17,7 +17,7 @@ class NewsAppLocalDataSource @Inject constructor(private val newsDao: NewsDao) {
         return newsDao.getAllNewsFavorite()
     }
 
-    suspend fun isFavorite(id:Int): Boolean{
-        return newsDao.isFavorite(id)
+    suspend fun isFavorite(urlToImage:String): Boolean{
+        return newsDao.isFavorite(urlToImage)
     }
 }

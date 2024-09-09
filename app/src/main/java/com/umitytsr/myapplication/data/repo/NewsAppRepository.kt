@@ -25,8 +25,6 @@ class NewsAppRepository @Inject constructor(
         }
     }
 
-
-
     suspend fun fetchAllCategoryNews(category: String): Flow<Resource<List<Article>>> = flow {
         Resource.Loading
         try {
@@ -42,7 +40,9 @@ class NewsAppRepository @Inject constructor(
     suspend fun fetchSearchNews(q:String):Flow<Resource<List<Article>>> = flow {
         Resource.Loading
         try {
-            val propertiesSearchNewsFromAPI = remoteDataSource.getAllSearchProperties(q).articles
+            val propertiesSearchNewsFromAPI = remoteDataSource.getAllSearchProperties(q).articles.filter {
+                it.urlToImage != null
+            }
             emit(Resource.Success(propertiesSearchNewsFromAPI))
         }catch (e:Exception){
             Resource.Error(e)
@@ -61,7 +61,7 @@ class NewsAppRepository @Inject constructor(
         localDataSource.deleteFavoriteProperties(favorite)
     }
 
-    suspend fun isFavorite(id:Int): Flow<Boolean> = flow {
-        emit(localDataSource.isFavorite(id))
+    suspend fun isFavorite(urlToImage: String): Flow<Boolean> = flow {
+        emit(localDataSource.isFavorite(urlToImage))
     }
 }
