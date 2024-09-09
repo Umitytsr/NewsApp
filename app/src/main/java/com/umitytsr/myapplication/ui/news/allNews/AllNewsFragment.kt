@@ -28,9 +28,7 @@ class AllNewsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.arrowBackButton.setOnClickListener {
-            findNavController().navigate(
-                AllNewsFragmentDirections.actionAllNewsFragmentToHomeFragment()
-            )
+            findNavController().navigateUp()
         }
     }
 

@@ -9,7 +9,7 @@ import com.umitytsr.myapplication.databinding.ItemRowNewsTitleBinding
 
 class NewsAdapter(
     private val newsList: List<Article>,
-    private val onItemClickNews: NewsItemClickListener
+    private val onClickNews: (position: Int) -> Unit
 ) : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
 
     inner class NewsViewHolder(private val binding: ItemRowNewsTitleBinding) :
@@ -21,7 +21,7 @@ class NewsAdapter(
                     .into(newsImageView)
                 newsTitleTextView.text = news.title
                 newsCardView.setOnClickListener {
-                    onItemClickNews.newsItemClicked(news)
+                    onClickNews(adapterPosition)
                 }
             }
         }
@@ -37,9 +37,5 @@ class NewsAdapter(
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
         holder.bind(newsList[position])
-    }
-
-    interface NewsItemClickListener{
-        fun newsItemClicked(news: Article)
     }
 }

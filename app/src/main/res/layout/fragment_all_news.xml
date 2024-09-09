@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    style="@style/backgroundColor"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.news.allNews.AllNewsFragment">
 
@@ -34,6 +35,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/arrowBackButton"
+        android:layout_marginEnd="15dp"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_row_news"
         android:layout_marginHorizontal="15dp"
         android:layout_marginTop="10dp"
         />

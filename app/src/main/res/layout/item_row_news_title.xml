@@ -7,12 +7,14 @@
     android:layout_height="wrap_content"
     android:layout_marginEnd="3dp"
     android:clickable="true"
+    style="@style/backgroundColor"
     android:foreground="?attr/selectableItemBackground"
     app:cardCornerRadius="10dp"
     app:cardElevation="0dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        style="@style/backgroundColor"
         android:layout_height="match_parent">
 
         <ImageView
