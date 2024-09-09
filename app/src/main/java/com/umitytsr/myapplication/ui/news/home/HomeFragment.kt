@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
@@ -21,7 +22,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), NewsAdapter.NewsItemClickListener, NewsDescriptionAdapter.NewsCategoryItemClickListener {
     private lateinit var binding: FragmentHomeBinding
     private val viewModel: HomeViewModel by viewModels()
     override fun onCreateView(
@@ -37,6 +38,12 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupTabLayoutListener()
         collectData()
+
+        binding.latestNewsSeeAllButton.setOnClickListener {
+            findNavController().navigate(
+                HomeFragmentDirections.actionHomeFragmentToAllNewsFragment()
+            )
+        }
     }
 
     private fun setupTabLayoutListener(){
@@ -98,7 +105,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun initLatestNewsRecylerView(newsList: List<Article>){
-        val _adapter = NewsAdapter(newsList)
+        val _adapter = NewsAdapter(newsList,this@HomeFragment)
         val _layoutManager = LinearLayoutManager(requireContext(),RecyclerView.HORIZONTAL,false)
         with(binding.latestNewsRecyclerView){
             adapter = _adapter
@@ -108,12 +115,24 @@ class HomeFragment : Fragment() {
     }
 
     private fun initCategoryNewsRecylerView(newsList: List<Article>){
-        val _adapter = NewsAdapter(newsList)
+        val _adapter = NewsDescriptionAdapter(newsList,this@HomeFragment)
         val _layoutManager = LinearLayoutManager(requireContext(),RecyclerView.VERTICAL,false)
         with(binding.categoryRecyclerView){
             adapter = _adapter
             layoutManager = _layoutManager
             setHasFixedSize(true)
         }
+    }
+
+    override fun newsItemClicked(news: Article) {
+        findNavController().navigate(
+            HomeFragmentDirections.actionHomeFragmentToDetailerFragment(news)
+        )
+    }
+
+    override fun newsCategoryItemClicked(news: Article) {
+        findNavController().navigate(
+            HomeFragmentDirections.actionHomeFragmentToDetailerFragment(news)
+        )
     }
 }

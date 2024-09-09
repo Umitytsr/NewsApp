@@ -6,4 +6,9 @@
     </style>
 
     <style name="Theme.NewsApp" parent="Base.Theme.NewsApp" />
+
+    <style name="appNavigationBackgroundColor" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="backgroundTint">@color/white</item>
+        <item name="itemIconTint">@color/bottom_nav_icon_color</item>
+    </style>
 </resources>
