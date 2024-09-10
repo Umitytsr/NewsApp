@@ -1,7 +1,12 @@
 package com.umitytsr.myapplication.data.repo
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.umitytsr.myapplication.data.model.Article
+import com.umitytsr.myapplication.data.service.NewsAPIService
 import com.umitytsr.myapplication.data.source.local.NewsAppLocalDataSource
+import com.umitytsr.myapplication.data.source.paging.NewsPagingSource
 import com.umitytsr.myapplication.data.source.remote.NewsAppRemoteDataSource
 import com.umitytsr.myapplication.util.Resource
 import kotlinx.coroutines.flow.Flow
@@ -10,7 +15,8 @@ import javax.inject.Inject
 
 class NewsAppRepository @Inject constructor(
     private val remoteDataSource: NewsAppRemoteDataSource,
-    private val localDataSource: NewsAppLocalDataSource
+    private val localDataSource: NewsAppLocalDataSource,
+    private val newsAPIService: NewsAPIService
 ) {
     suspend fun fetchAllNews(): Flow<Resource<List<Article>>> = flow {
         Resource.Loading
@@ -46,6 +52,17 @@ class NewsAppRepository @Inject constructor(
         }catch (e:Exception){
             Resource.Error(e)
         }
+    }
+
+    fun fetchPagingNews(): Flow<PagingData<Article>>{
+        return Pager(
+            config = PagingConfig(
+                pageSize = 20,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = {NewsPagingSource(newsAPIService)},
+            initialKey = 1
+        ).flow
     }
 
     suspend fun allNewsFavorites(): Flow<List<Article>> = flow{

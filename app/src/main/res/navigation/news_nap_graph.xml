@@ -39,7 +39,11 @@
         android:id="@+id/allNewsFragment"
         android:name="com.umitytsr.myapplication.ui.news.allNews.AllNewsFragment"
         android:label="fragment_all_news"
-        tools:layout="@layout/fragment_all_news" />
+        tools:layout="@layout/fragment_all_news" >
+        <action
+            android:id="@+id/action_allNewsFragment_to_detailerFragment"
+            app:destination="@id/detailerFragment" />
+    </fragment>
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.umitytsr.myapplication.ui.news.search.SearchFragment"

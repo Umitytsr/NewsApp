@@ -2,14 +2,14 @@ package com.umitytsr.myapplication.ui.news.allNews
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.umitytsr.myapplication.data.model.Article
 import com.umitytsr.myapplication.databinding.ItemRowNewsBinding
 
-class AllNewsAdapter: RecyclerView.Adapter<AllNewsAdapter.NewsViewHolder>() {
+class AllNewsAdapter(private val onClickNews: (Article) -> Unit): PagingDataAdapter<Article,AllNewsAdapter.NewsViewHolder>(NEWS_COMPARATOR) {
 
     inner class NewsViewHolder(private val binding: ItemRowNewsBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(news: Article){
@@ -19,6 +19,9 @@ class AllNewsAdapter: RecyclerView.Adapter<AllNewsAdapter.NewsViewHolder>() {
                     .into(newsImageView)
                 newsTitleTextView.text = news.title
                 newsDescriptionTextView.text = news.description
+                newsCardView.setOnClickListener {
+                    onClickNews(news)
+                }
             }
         }
     }
@@ -33,21 +36,21 @@ class AllNewsAdapter: RecyclerView.Adapter<AllNewsAdapter.NewsViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: AllNewsAdapter.NewsViewHolder, position: Int) {
-        holder.bind(differ.currentList[position])
-    }
-
-    override fun getItemCount(): Int = differ.currentList.size
-
-    private val diffCallback = object : DiffUtil.ItemCallback<Article>(){
-        override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
-            return oldItem.url == newItem.url
-        }
-
-        override fun areContentsTheSame(oldItem: Article, newItem: Article): Boolean {
-            return oldItem == newItem
+        getItem(position)?.let{
+            holder.bind(it)
         }
     }
-    val differ = AsyncListDiffer(this,diffCallback)
 
-    private var onItemClickedListener: ((Article) -> Unit)? = null
+    companion object {
+        private val NEWS_COMPARATOR = object : DiffUtil.ItemCallback<Article>() {
+            override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
+                // Id is unique.
+                return oldItem.title == newItem.title
+            }
+
+            override fun areContentsTheSame(oldItem: Article, newItem: Article): Boolean {
+                return oldItem == newItem
+            }
+        }
+    }
 }
