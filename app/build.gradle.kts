@@ -90,6 +90,7 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-auth")
 
+    implementation ("androidx.paging:paging-runtime-ktx:3.3.2")
 }
 
 kapt {
