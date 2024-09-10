@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.carousel.MaskableFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/newsCardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginEnd="3dp"
-    android:clickable="true"
-    style="@style/backgroundColor"
+    android:layout_marginStart="4dp"
+    android:layout_marginEnd="4dp"
     android:foreground="?attr/selectableItemBackground"
-    app:cardCornerRadius="10dp"
-    app:cardElevation="0dp">
+    app:shapeAppearance="?attr/shapeAppearanceCornerExtraLarge">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
         style="@style/backgroundColor"
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <ImageView
@@ -34,19 +32,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/buz"
+            android:ellipsize="end"
             android:gravity="center"
-            android:text="newsTitle"
-            android:paddingEnd="5dp"
-            android:paddingStart="5dp"
-            android:paddingBottom="3dp"
-            android:textColor="@color/black"
             android:maxLines="2"
-            android:textStyle="bold"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="10dp"
+            android:text="newsTitle"
+            android:textColor="@color/black"
             android:textSize="14sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/newsImageView"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:ellipsize="end"
-            />
+            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-</com.google.android.material.card.MaterialCardView>
+
+</com.google.android.material.carousel.MaskableFrameLayout>

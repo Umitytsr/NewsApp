@@ -6,4 +6,7 @@
     <color name="buz">#DDDDDD</color>
     <color name="transparent">#00FFFFFF</color>
     <color name="gray">#B3756A6A</color>
+    <color name="solukTextYazisi">#C3050505</color>
+    <color name="backgroundColor">#FF14181D</color>
+    <color name="buttonBackgrounColor">#FCE7E9</color>
 </resources>
