@@ -11,12 +11,14 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.carousel.CarouselLayoutManager
+import com.google.android.material.carousel.CarouselSnapHelper
+import com.google.android.material.carousel.FullScreenCarouselStrategy
 import com.google.android.material.tabs.TabLayout
 import com.umitytsr.myapplication.data.model.Article
 import com.umitytsr.myapplication.databinding.FragmentHomeBinding
 import com.umitytsr.myapplication.util.Resource
+import com.umitytsr.myapplication.util.getDescriptionNewsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -25,6 +27,7 @@ import kotlinx.coroutines.launch
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private val viewModel: HomeViewModel by viewModels()
+    private var carouselSnapHelper: CarouselSnapHelper? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,7 +42,7 @@ class HomeFragment : Fragment() {
         setupTabLayoutListener()
         collectData()
 
-        binding.latestNewsSeeAllButton.setOnClickListener {
+        binding.generalNewsSeeAllButton.setOnClickListener {
             findNavController().navigate(
                 HomeFragmentDirections.actionHomeFragmentToAllNewsFragment()
             )
@@ -105,10 +108,17 @@ class HomeFragment : Fragment() {
     }
 
     private fun initGeneralNewsRecyclerView(news: List<Article>){
-        binding.generalNewsRecyclerView.adapter = getGeneralNewsAdapter(news)
+        if (carouselSnapHelper == null) {
+            carouselSnapHelper = CarouselSnapHelper().apply {
+                attachToRecyclerView(binding.generalNewsRecyclerView)
+            }
+        }
+
+        binding.generalNewsRecyclerView.apply {
+            layoutManager = CarouselLayoutManager(FullScreenCarouselStrategy())
+            adapter = getGeneralNewsAdapter(news)
+        }
     }
-
-
 
     private fun getGeneralNewsAdapter(news: List<Article>): NewsAdapter{
         return NewsAdapter(news){ position ->
@@ -119,13 +129,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun initDescriptionRecyclerView(news: List<Article>){
-        binding.categoryRecyclerView.adapter = getDescriptionNewsAdapter(news)
-    }
-
-    private fun getDescriptionNewsAdapter(news: List<Article>): NewsDescriptionAdapter{
-        return NewsDescriptionAdapter(news){ position ->
-            val newsUI = news[position]
-            val action = HomeFragmentDirections.actionHomeFragmentToDetailerFragment(newsUI)
+        binding.categoryRecyclerView.adapter = getDescriptionNewsAdapter(news){
+            val action = HomeFragmentDirections.actionHomeFragmentToDetailerFragment(it)
             findNavController().navigate(action)
         }
     }

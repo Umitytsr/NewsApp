@@ -1,7 +1,6 @@
 package com.umitytsr.myapplication.data.repo
 
 import com.umitytsr.myapplication.data.model.Article
-import com.umitytsr.myapplication.data.service.NewsAPIService
 import com.umitytsr.myapplication.data.source.local.NewsAppLocalDataSource
 import com.umitytsr.myapplication.data.source.remote.NewsAppRemoteDataSource
 import com.umitytsr.myapplication.util.Resource

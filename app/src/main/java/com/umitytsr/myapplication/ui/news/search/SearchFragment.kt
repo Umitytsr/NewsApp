@@ -10,13 +10,10 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.umitytsr.myapplication.data.model.Article
 import com.umitytsr.myapplication.databinding.FragmentSearchBinding
-import com.umitytsr.myapplication.ui.news.home.HomeFragmentDirections
-import com.umitytsr.myapplication.ui.news.home.NewsDescriptionAdapter
 import com.umitytsr.myapplication.util.Resource
+import com.umitytsr.myapplication.util.getDescriptionNewsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
@@ -82,13 +79,8 @@ class SearchFragment : Fragment() {
 
 
     private fun initDescriptionRecyclerView(news: List<Article>){
-        binding.searchNewsRecyclerView.adapter = getDescriptionNewsAdapter(news)
-    }
-
-    private fun getDescriptionNewsAdapter(news: List<Article>): NewsDescriptionAdapter{
-        return NewsDescriptionAdapter(news){ position ->
-            val newsUI = news[position]
-            val action = SearchFragmentDirections.actionSearchFragmentToDetailerFragment(newsUI)
+        binding.searchNewsRecyclerView.adapter = getDescriptionNewsAdapter(news){
+            val action = SearchFragmentDirections.actionSearchFragmentToDetailerFragment(it)
             findNavController().navigate(action)
         }
     }

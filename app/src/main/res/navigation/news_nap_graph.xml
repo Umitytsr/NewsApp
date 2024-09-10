@@ -49,4 +49,9 @@
             android:id="@+id/action_searchFragment_to_detailerFragment"
             app:destination="@id/detailerFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.umitytsr.myapplication.ui.news.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>

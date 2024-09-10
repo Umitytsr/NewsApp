@@ -10,12 +10,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.umitytsr.myapplication.data.model.Article
 import com.umitytsr.myapplication.databinding.FragmentFavoriteBinding
-import com.umitytsr.myapplication.ui.news.home.HomeFragmentDirections
-import com.umitytsr.myapplication.ui.news.home.NewsDescriptionAdapter
+import com.umitytsr.myapplication.util.getDescriptionNewsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -43,7 +40,20 @@ class FavoriteFragment : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
                 launch {
                     viewModel.propertiesFavorite.collectLatest {
-                        initDescriptionRecyclerView(it)
+                        if (it.isNotEmpty()){
+                            with(binding){
+                                emtyListImageView.visibility = View.INVISIBLE
+                                emptyListTextView.visibility = View.INVISIBLE
+                                favoriteNewsRecyclerView.visibility = View.VISIBLE
+                            }
+                            initDescriptionRecyclerView(it)
+                        }else{
+                            with(binding){
+                                emtyListImageView.visibility = View.VISIBLE
+                                emptyListTextView.visibility= View.VISIBLE
+                                favoriteNewsRecyclerView.visibility = View.INVISIBLE
+                            }
+                        }
                     }
                 }
             }
@@ -51,13 +61,8 @@ class FavoriteFragment : Fragment() {
     }
 
     private fun initDescriptionRecyclerView(news: List<Article>){
-        binding.favoriteNewsRecyclerView.adapter = getDescriptionNewsAdapter(news)
-    }
-
-    private fun getDescriptionNewsAdapter(news: List<Article>): NewsDescriptionAdapter{
-        return NewsDescriptionAdapter(news){ position ->
-            val newsUI = news[position]
-            val action = FavoriteFragmentDirections.actionFavoriteFragmentToDetailerFragment(newsUI)
+        binding.favoriteNewsRecyclerView.adapter = getDescriptionNewsAdapter(news){
+            val action = FavoriteFragmentDirections.actionFavoriteFragmentToDetailerFragment(it)
             findNavController().navigate(action)
         }
     }

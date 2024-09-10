@@ -1,5 +1,8 @@
 package com.umitytsr.myapplication.di
 
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 import com.umitytsr.myapplication.data.service.NewsAPIService
 import com.umitytsr.myapplication.util.Constants
 import com.umitytsr.myapplication.util.HeaderInterceptor
@@ -16,6 +19,12 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
+
+    @Provides
+    @Singleton
+    fun provideFirebaseAuth(): FirebaseAuth{
+        return Firebase.auth
+    }
 
     @Provides
     @Singleton

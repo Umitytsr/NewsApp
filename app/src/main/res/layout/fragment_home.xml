@@ -2,8 +2,8 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     style="@style/backgroundColor"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.news.home.HomeFragment">
 
@@ -13,98 +13,90 @@
 
         <TextView
             android:id="@+id/latestNewsTextView"
+            style="@style/textColor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Genaral News"
-            android:layout_marginTop="15dp"
             android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:text="Genaral News"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/latestNewsSeeAllButton"
+            android:id="@+id/generalNewsSeeAllButton"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/latestNewsTextView"
             android:layout_marginEnd="15dp"
-            app:layout_constraintBottom_toBottomOf="@id/latestNewsTextView"
             android:text="See All"
             android:textColor="@color/red"
-            style="@style/Widget.Material3.Button.TextButton"
-            />
+            app:layout_constraintBottom_toBottomOf="@id/latestNewsTextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/latestNewsTextView" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/generalNewsRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:layout_marginEnd="15dp"
             android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
             android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_row_news_title"
-            app:layout_constraintTop_toBottomOf="@id/latestNewsTextView"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layoutManager="com.google.android.material.carousel.CarouselLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
-            />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/latestNewsTextView"
+            tools:listitem="@layout/item_row_news_title" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/categoryTabLayout"
+            style="@style/backgroundColor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabMode="scrollable"
-            app:tabTextColor="@color/red"
-            android:layout_marginTop="8dp"
-            app:tabGravity="start"
-            style="@style/backgroundColor"
-            app:tabIndicatorColor="@color/red"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/generalNewsRecyclerView"
-            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginStart="15dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="15dp"
             android:background="@drawable/rounded_tab_background"
-            app:tabContentStart="0dp">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/generalNewsRecyclerView"
+            app:tabContentStart="0dp"
+            app:tabGravity="start"
+            app:tabIndicatorColor="@color/red"
+            app:tabMode="scrollable"
+            app:tabTextColor="@color/red">
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Business"
-                />
+                android:text="Business" />
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Entertainment"
-                />
+                android:text="Entertainment" />
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Health"
-                />
+                android:text="Health" />
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Science"
-                />
+                android:text="Science" />
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sports"
-                />
+                android:text="Sports" />
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Technology"
-                />
+                android:text="Technology" />
 
         </com.google.android.material.tabs.TabLayout>
 
@@ -117,10 +109,9 @@
             android:layout_marginEnd="15dp"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_row_news"
-            app:layout_constraintTop_toBottomOf="@id/categoryTabLayout"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/categoryTabLayout"
+            tools:listitem="@layout/item_row_news" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
